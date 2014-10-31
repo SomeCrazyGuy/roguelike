@@ -1,0 +1,1 @@
+A roguelike game initally coded in 24 hours to sharpen my c skills. The source compiles without warnings in clang and gcc and is C89 compliant. It has no dependencies other than the standard library should run just about anywhere.
