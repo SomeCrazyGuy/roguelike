@@ -99,10 +99,10 @@ dungeon* dungeon_create(int w, int h) {
 dungeon* dungeon_load(void) {
 	dungeon* d = NULL;
 	FILE* save = NULL;
-	char savename[MAX_NAME_LENGTH] = {0};
+	char *savename;
 
-	input_string((char*)savename, MAX_NAME_LENGTH, "Savefile Name");
-	save = fopen((char*)savename, "r");
+	savename = input_string("Savefile Name");
+	save = fopen(savename, "r");
 
 	if(save == NULL){
 		perror("save_dungeon");
@@ -137,16 +137,17 @@ dungeon* dungeon_load(void) {
 	d->cur_room = NULL;
 
 	d->update = TRUE; //possibly needed
+    free(savename);
 	return d;
 }
 
 //save a dungeon
 int dungeon_save(const dungeon* const d) {
 	FILE* save = NULL;
-	char savename[MAX_NAME_LENGTH] = {0};
+	char *savename;
 
-	input_string((char*)savename, MAX_NAME_LENGTH, "Savefile Name");
-	save = fopen((char*)savename, "w");
+	savename = input_string("Savefile Name");
+	save = fopen(savename, "w");
 
 	if(save == NULL){
 		perror("save_dungeon");
@@ -169,6 +170,7 @@ int dungeon_save(const dungeon* const d) {
 	fwrite(d->player.name, 1, MAX_NAME_LENGTH, save);
 
 	fclose(save);
+    free(savename);
 	return 0;
 }
 
