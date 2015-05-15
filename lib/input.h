@@ -7,7 +7,7 @@
 #include <string.h>
 
 //user input
-const char* input_string(char*, const int, const char* const);
+char* input_string(const char* const);
 int input_char(const char* const);
 int input_bool(const char* const);
 int input_number(const char* const, const int, const int);
@@ -15,11 +15,13 @@ int input_number(const char* const, const int, const int);
 /*
  *    I N P U T    F U N C T I O N S
  */
-const char* input_string(char* out, const int max, const char* const prompt) {
+char* input_string(const char* const prompt) {
+    char *out = NULL;
+    size_t n = 0;
 	do {
 		printf("%s> ", prompt);
 		fflush(stdout);
-		fgets(out, max, stdin);
+        getline(&out, &n, stdin);
 		if(out[0] == '\n') {
 			printf("Invalid Input!\n");
 			continue;
@@ -31,10 +33,10 @@ const char* input_string(char* out, const int max, const char* const prompt) {
 }
 
 int input_char(const char* const prompt) {
-	char tmp[128] = {0};
 	int ret;
+    char *tmp;
 	do {
-		input_string(tmp, 127, prompt);
+		tmp = input_string(prompt);
 		ret = tmp[0];
 		if(!isgraph(ret)) {
 			printf("Invalid Choice!\n");
@@ -42,6 +44,7 @@ int input_char(const char* const prompt) {
 		}
 		break;
 	} while(1);
+    free(tmp);
 	return ret;
 }
 
@@ -59,10 +62,10 @@ int input_bool(const char* const prompt) {
 }
 
 int input_number(const char* const prompt, const int min, const int max) {
-	char tmp[128] = {0};
+	char *tmp;
 	int ret;
 	do {
-		input_string(tmp, 127, prompt);
+		tmp = input_string(prompt);
 		ret = atoi(tmp);
 		if(ret < min || ret > max) {
 			printf("Invalid Number!\n");
@@ -70,6 +73,7 @@ int input_number(const char* const prompt, const int min, const int max) {
 		}
 		break;
 	} while(1);
+    free(tmp);
 	return ret;
 }
 #endif //C_INPUT_H_
