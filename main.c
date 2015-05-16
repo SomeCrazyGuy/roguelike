@@ -291,11 +291,13 @@ void action_fight(dungeon* d) {
 				break;
 			} else if (util_attack(d->room_npc, &(d->player), d->npc_buff)) {
 				printf("I have succumbed to battle!\n");
+                dungeon_destroy(d);
 				exit(1);
 			}
 		}
 		if(d->location == d->end_room) {
 			printf("Congratulations! You have won the game.\n");
+            dungeon_destroy(d);
 			exit(0);
 		}
 	}
@@ -368,7 +370,7 @@ void action_help() {
 		"\tl - loot container\n"
 		"\tf - fight boss\n"
 		"\tp - put on armor\n"
-		"\tW - weild a weapon\n"
+		"\tW - wield a weapon\n"
 		"\tE - eat food\n"
 		"\tr - reflect upon myself\n"
 		"\tx - examine\n"
@@ -382,10 +384,9 @@ void action_help() {
 
 //tutorial intro sequence
 void tutorial(dungeon* d) {
-	d->player.name = calloc(1, MAX_NAME_LENGTH);
 	int x;
 
-	input_string((char*)d->player.name, MAX_NAME_LENGTH - 1, "What is my name?");
+	d->player.name = input_string("What is my name?");
 	for (x=0; x<TR_NUM; ++x) {
 		printf("[%d] %s\n", x, adj_trait[x]);
 	}
