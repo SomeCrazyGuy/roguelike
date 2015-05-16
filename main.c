@@ -291,11 +291,13 @@ void action_fight(dungeon* d) {
 				break;
 			} else if (util_attack(d->room_npc, &(d->player), d->npc_buff)) {
 				printf("I have succumbed to battle!\n");
+                dungeon_destroy(d);
 				exit(1);
 			}
 		}
 		if(d->location == d->end_room) {
 			printf("Congratulations! You have won the game.\n");
+            dungeon_destroy(d);
 			exit(0);
 		}
 	}
@@ -318,7 +320,7 @@ void action_examine(dungeon* d) {
 
 int main() {
 	srand(0); //seed generator with 0 for debugging
-	dungeon *game = dungeon_create(10, 20);
+	dungeon *game = dungeon_create(1, 2);
 
 	tutorial(game); //tutorial needs to be reworked
 
