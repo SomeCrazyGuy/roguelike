@@ -320,7 +320,7 @@ void action_examine(dungeon* d) {
 
 int main() {
 	srand(0); //seed generator with 0 for debugging
-	dungeon *game = dungeon_create(1, 2);
+	dungeon *game = dungeon_create(10, 20);
 
 	tutorial(game); //tutorial needs to be reworked
 
