@@ -33,7 +33,7 @@ void dungeon_create_rooms(dungeon* d) {
 	const int h = d->height;
 	const int num = (w*h);
 	int x;
-	d->rooms = calloc((unsigned long)num, sizeof(room));
+	d->rooms = calloc((unsigned long)num + 1, sizeof(room)); // XXX add 1 up, passed w * h
 
 	for(x=0; x<num; ++x) {
 		dungeon_room_create(&(d->rooms[x]));
